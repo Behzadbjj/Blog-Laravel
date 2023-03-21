@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('acceuil') }}">
                         <img src="{{ asset('img/urbex.jpg') }}" alt="My Logo" class="block h-9 w-auto fill-current text-gray-800">
                     </a>
                 </div>
@@ -14,17 +14,28 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('acceuil')" :active="request()->routeIs('acceuil')">
                         {{ __('Acceuil') }}
+                        
                     </x-nav-link>
-
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    
+                    @auth
+                    <x-nav-link :href="route('cardposts2.index')" :active="request()->routeIs('cardposts2.index')">
+                        {{ __('panier') }}
                     </x-nav-link>
+                        @if (Auth::user()->is_admin)
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
 
-                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
-                        {{ __('Créer un post') }}
-                    </x-nav-link>
+                                
+                                
 
-                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.create')">
+                            <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
+                                {{ __('Créer un post') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+
+                    <x-nav-link :href="route('userposts.index')" :active="request()->routeIs('userposts.index')">
                         {{ __('Tous les posts') }}
                     </x-nav-link>
                 </div>
@@ -114,15 +125,17 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+  
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('posts.create')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
                 {{ __('Créer un post') }}
             </x-responsive-nav-link>
-        </div>
-
+  
+            </div>
+           
         <!-- Responsive Settings Options -->
         @auth
         <div class="pt-4 pb-1 border-t border-gray-200">

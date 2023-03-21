@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
+use App\Models\Post;
 
 return new class extends Migration
 {
@@ -12,13 +13,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('card', function (Blueprint $table) {
             $table->id();
-            $table->text('body'); 
+            $table->string('title');
+            $table->text('content');
+            $table->string('image');
             $table->timestamps();
 
             $table->foreignIdFor(User::class);
-            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Post::class);
+            
         });
     }
 
@@ -27,6 +31,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('cards');
     }
 };
+
+
