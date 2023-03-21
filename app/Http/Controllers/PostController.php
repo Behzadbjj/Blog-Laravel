@@ -17,7 +17,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('user')->latest()->get(); /*Fais remonter le derniere post créer en haut de la page(order by creatded at)*/ 
-
         return view('post.index',compact('posts'));
     }
 
@@ -26,23 +25,15 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view ('post.create');
+  
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
+    public function store()
     {
 
-        $imageName = $request->image->store('posts');
-
-        Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'image' => $imageName
-        ]);
-        return redirect()->route('dashboard')->with('success', 'Votre post a été créé');
     }
 
     /**
@@ -60,50 +51,24 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit()
     {
-        if (Gate::denies('update-post', $post)) {
-            abort(403);
-        }
 
-        return view('post.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePostRequest $request, Post $post)
+    public function update()
     {
-        $arrayUpdate = [
-            'title' => $request->title,
-            'content' => $request->content
-        ];
 
-        if ($request->image != null) {
-            $imageName = $request->image->store('posts');
-
-
-            $arrayUpdate = array_merge($arrayUpdate, [
-                'image' => $imageName
-            ]);
-        }
-
-        $post->update($arrayUpdate);
-
-        return redirect()->route('dashboard')->with('success', 'Votre post a été modifié');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy()
     {
-        if (Gate::denies('destroy-post', $post)) {
-            abort(403);
-        }
 
-        $post->delete();
-
-        return redirect()->route('dashboard')->with('success', 'Votre post a été supprimé');
     }
 }

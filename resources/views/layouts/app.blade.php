@@ -14,8 +14,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body class="font-sans antialiased" >
+        <div class="min-h-screen bg-gray-100" style="background-image: url('https://cdn.pixabay.com/photo/2017/06/17/18/35/beach-2413081_960_720.jpg'); background-repeat: no-repeat;background-size: cover;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
